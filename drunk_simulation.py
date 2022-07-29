@@ -64,3 +64,14 @@ class plane:
                         (x,y) in current_coordinate + (x,y) from drunk.walk()"""
         
         self.coordinates[drunk] = new_coordinate        #we update the dict in self.coordinates with the new coordinate
+
+def walk_simulation(simulation_steps, simulation_repetitions, drunk):   #
+    pass
+
+def main(simulation_steps, simulation_repetitions, drunk): #recieves a number 
+    pass
+
+if __name__ == "__main__":
+    simulation_steps = [10, 100, 1000, 10000]   #this is the number of steps the drunk will walk by simulation
+    simulation_repetitions = 100                #how many times the simulation will be executed
+    main(simulation_steps, simulation_repetitions, drunk_normal)    #the main function recieves the number of steps,
