@@ -65,11 +65,32 @@ class plane:
         
         self.coordinates[drunk] = new_coordinate        #we update the dict in self.coordinates with the new coordinate
 
-def walk_simulation(simulation_steps, simulation_repetitions, drunk):   #
-    pass
+def walking(plane, drunk, simulation_steps):
+    starting_point = plane.get_coordinate(drunk)        #See line 44 for comment on this function
 
-def main(simulation_steps, simulation_repetitions, drunk): #recieves a number 
-    pass
+    for _ in range(simulation_steps):
+        plane.move(drunk)                               #see line 47 on this function
+        return starting_point.distance(plane.get_coordinate(drunk))
+
+        """Again, several steps on the last line:
+        1). starting_point of drunk by definition in the walk_simulation will be (0,0).
+        2). Then the function plane.move(drunk) will change coordinates of drunk. 
+        3).Then distance will compare the initial coordinate (starting_point) with the new drunk coordinate"""
+
+def walk_simulation(simulation_steps, simulation_repetitions, drunk_instance):  
+    drunk = drunk_instance(name="Aroesti")                                      #instance of the drunk class with name
+    starting_point = coordinate(0,0)                                            #an instance of the coordinate class
+    distance_walked = []                          #empty dict to save walked distances in each simulation
+
+    for _ in range(simulation_repetitions):
+        plane = plane()                                     #creates a dict to store and drunk(key) and its coordinates
+        plane.add_drunk(drunk, starting_point)
+        walk_simulation = walking(plane, drunk, simulation_steps)
+        distance_walked.append(round(walk_simulation, 1))   #adds to the list the distance from walking function
+
+def main(simulation_steps, simulation_repetitions, drunk):
+    for steps in simulation_steps:
+        distances = walking(steps, simulation_repetitions, drunk)
 
 if __name__ == "__main__":
     simulation_steps = [10, 100, 1000, 10000]   #this is the number of steps the drunk will walk by simulation
