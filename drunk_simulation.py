@@ -1,6 +1,8 @@
 import random
 import math
 
+from numpy import maximum, minimum
+
 
 class drunk:
     def __init__(self, name):
@@ -11,7 +13,7 @@ class drunk_normal(drunk):
     def __init__(self, name):
         super().__init__(name)
 
-    def walk():
+    def walk(self):
         walk_options = [(1,0),(0,1),(-1,0),(0,-1)]  #this is the list of possible paths a drunk_normal can take
                                                     #as coordinates (x,y) in a cartesian plane
         return random.choice(walk_options)          #the function selects one option from the list
@@ -75,7 +77,8 @@ def walking(plane, drunk, simulation_steps):
         """Again, several steps on the last line:
         1). starting_point of drunk by definition in the walk_simulation will be (0,0).
         2). Then the function plane.move(drunk) will change coordinates of drunk. 
-        3).Then distance will compare the initial coordinate (starting_point) with the new drunk coordinate"""
+        3).Then distance will compare the initial coordinate (starting_point) with the new drunk coordinate
+        4).The new coordinate will become the starting_point for the next iteration, and so on."""
 
 def walk_simulation(simulation_steps, simulation_repetitions, drunk_instance):  
     drunk = drunk_instance(name="Aroesti")                                      #instance of the drunk class with name
@@ -88,9 +91,19 @@ def walk_simulation(simulation_steps, simulation_repetitions, drunk_instance):
         walk_simulation = walking(plane, drunk, simulation_steps)
         distance_walked.append(round(walk_simulation, 1))   #adds to the list the distance from walking function
 
+    return distance_walked
+
 def main(simulation_steps, simulation_repetitions, drunk):
     for steps in simulation_steps:
-        distances = walking(steps, simulation_repetitions, drunk)
+        distances = walking(steps, simulation_repetitions, drunk) #See line 68 for this function
+        average_distance = round(sum(distances)/len(distances),4) #Divides the total distance walked by-
+                                                                  #the total number of distances stored in 
+        maximum_distance = max(distances)
+        minimum_distance = min(distances)
+        print(f'{drunk.__name__} caminó {steps} pasos')
+        print(f'Distancia promedio: {average_distance}')
+        print(f'Distancia máxima: {maximum_distance}')
+        print(f'Distancia mínima: {minimum_distance}')
 
 if __name__ == "__main__":
     simulation_steps = [10, 100, 1000, 10000]   #this is the number of steps the drunk will walk by simulation
