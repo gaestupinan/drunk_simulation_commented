@@ -1,8 +1,6 @@
 import random
 import math
 
-from numpy import maximum, minimum
-
 
 class drunk:
     def __init__(self, name):
@@ -44,7 +42,7 @@ class plane:
         self.coordinates[drunk] = coordinate            #updates the dict with a drunk (key) and its coordinate
 
     def get_coordinate(self, drunk):                    #return the current position (x,y) of a drunk which 
-        return self.coordinate[drunk]                   #is the dict's key
+        return self.coordinates[drunk]                   #is the dict's key
     
     def move(self, drunk):
         new_x, new_y = drunk.walk()                     #obtain a new (x,y) coordinate by caling the normal_drunk.walk()
