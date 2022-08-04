@@ -1,5 +1,9 @@
 import random
 import math
+from bokeh.plotting import figure, show
+
+x_array = []
+y_array = []
 
 
 
@@ -48,6 +52,8 @@ class Plane:
         new_x, new_y = drunk.walk()                     #obtain a new (x,y) coordinate by caling the normal_drunk.walk()
         current_coordinate = self.coordinates[drunk]    #get the current coordinate retrieving the (x,y) 
                                                         #info asociated with the drunk key
+        x_array.append(current_coordinate.x)
+        y_array.append(current_coordinate.y)
         
         new_coordinate = current_coordinate.new_position(new_x, new_y)
         
@@ -92,19 +98,33 @@ def walk_simulation(simulation_steps, simulation_repetitions, drunk_instance):
 
     return distance_walked
 
+#def drunk_graphic(x,y):
+#   graphic = figure(title="Drunk's path", x_axis_label = "Steps by drunk guy", y_axis_label="Distance by drunk guy")
+#    graphic.line(x,y, legend="Average distance")
+#    show(graphic)
+
+def fun_graphic(x, y):
+    plot = figure(title="Random drunk")
+    plot.line(x,y)
+    show(plot)
+
 def main(simulation_steps, simulation_repetitions, drunk):
+    average_distance_per_walk = []
     for steps in simulation_steps:
         distances = walk_simulation(steps, simulation_repetitions, drunk) #See line 68 for this function
         average_distance = round(sum(distances)/len(distances),4) #Divides the total distance walked by-
                                                                   #the total number of distances stored in 
         maximum_distance = max(distances)
         minimum_distance = min(distances)
+        average_distance_per_walk.append(average_distance)
         print(f'{drunk.__name__} caminó {steps} pasos')
         print(f'Distancia promedio: {average_distance}')
         print(f'Distancia máxima: {maximum_distance}')
         print(f'Distancia mínima: {minimum_distance}')
+    #drunk_graphic(simulation_steps, average_distance_per_walk)
+    fun_graphic(x_array, y_array)
 
 if __name__ == "__main__":
-    simulation_steps = [10, 100, 1000, 10000]   #this is the number of steps the drunk will walk by simulation
-    simulation_repetitions = 100                #how many times the simulation will be executed
+    simulation_steps = [100000]   #this is the number of steps the drunk will walk by simulation
+    simulation_repetitions = 1                #how many times the simulation will be executed
     main(simulation_steps, simulation_repetitions, drunk_normal)    #the main function recieves the number of steps,
